@@ -1,5 +1,5 @@
 {
-  "name": "docker.js",
+  "name": "docker.io",
   "version": "0.1.0",
   "description": "wrapper for the docker.io REST interface",
   "main": "./lib",
