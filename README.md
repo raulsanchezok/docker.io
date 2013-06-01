@@ -1,4 +1,4 @@
-docker.js
+docker.io
 =========
 
 Node.JS wrapper for low-level Docker.io HTTP interface
