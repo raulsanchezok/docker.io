@@ -9,7 +9,6 @@ Node.JS wrapper for low-level Docker.io HTTP interface
 
 var docker = require('docker.js')({host:"http://localhost", port: "4243"});
 
-
 ```
 
 We have implamented most of the container methods like:
