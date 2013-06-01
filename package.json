@@ -1,0 +1,27 @@
+{
+  "name": "docker.js",
+  "version": "0.1.0",
+  "description": "wrapper for the docker.io REST interface",
+  "main": "./lib",
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha -R tap tests.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/appersonlabs/docker.js.git"
+  },
+  "keywords": [
+    "docker",
+    "docker.io"
+  ],
+  "author": "Matt Apperson",
+  "license": "Apache 2",
+  "readmeFilename": "README.md",
+  "dependencies": {
+    "request": "~2.21.0"
+  },
+  "devDependencies": {
+    "chai": "~1.6.0",
+    "mocha": "~1.9.0",
+  }
+}
