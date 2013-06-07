@@ -1,11 +1,11 @@
 var docker = require('./lib')({
-  host: 'http://datatower.local'
+  host: 'http://localhost'
 });
 var expect = require('chai').expect;
 var someContainerID = '';
 
 
-describe("docker.js", function() {
+describe("docker.io", function() {
 
   describe("#containers", function() {
 
@@ -74,10 +74,10 @@ describe("docker.js", function() {
       });
     });
 
-    describe("#runExport", function() {
+    describe("#stop", function() {
 
-      it("should export a container", function(done) {
-        this.timeout(50000);
+      it("should stop a running container", function(done) {
+        this.timeout(5000000);
 
         function handler(err, res) {
           expect(err).to.be.null;
@@ -85,54 +85,39 @@ describe("docker.js", function() {
           done();
         }
 
-        docker.containers.runExport(someContainerID, handler);
+        docker.containers.stop(someContainerID, handler);
       });
     });
 
-    // describe("#stop", function() {
+    describe("#start", function() {
 
-    //   it("should stop a running container", function(done) {
-    //     this.timeout(5000000);
+      it("should start a container", function(done) {
+        this.timeout(5000000);
 
-    //     function handler(err, res) {
-    //       expect(err).to.be.null;
+        function handler(err, res) {
+          expect(err).to.be.null;
 
-    //       done();
-    //     }
+          done();
+        }
 
-    //     docker.containers.stop(someContainerID, handler);
-    //   });
-    // });
+        docker.containers.start(someContainerID, handler);
+      });
+    });
 
-    // describe("#start", function() {
+    describe("#restart", function() {
 
-    //   it("should start a container", function(done) {
-    //     this.timeout(5000000);
+      it("should restart a running container", function(done) {
+        this.timeout(5000000);
 
-    //     function handler(err, res) {
-    //       expect(err).to.be.null;
+        function handler(err, res) {
+          expect(err).to.be.null;
 
-    //       done();
-    //     }
+          done();
+        }
 
-    //     docker.containers.start(someContainerID, handler);
-    //   });
-    // });
-
-    // describe("#restart", function() {
-
-    //   it("should restart a running container", function(done) {
-    //     this.timeout(5000000);
-
-    //     function handler(err, res) {
-    //       expect(err).to.be.null;
-
-    //       done();
-    //     }
-
-    //     docker.containers.restart(someContainerID, handler);
-    //   });
-    // });
+        docker.containers.restart(someContainerID, handler);
+      });
+    });
 
     describe("#attach", function() {
 
@@ -180,6 +165,21 @@ describe("docker.js", function() {
       });
     });
 
-  })
+  });
+
+    describe("#runExport", function() {
+
+      it("should export a container", function(done) {
+        this.timeout(50000);
+
+        function handler(err, res) {
+          expect(err).to.be.null;
+
+          done();
+        }
+
+        docker.containers.runExport(someContainerID, handler);
+      });
+    });
 
 })
