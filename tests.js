@@ -17,7 +17,7 @@ describe("docker.io", function() {
         function handler(err, res) {
           expect(err).to.be.null;
 
-          if(res.length > 0) {
+          if (res.length > 0) {
             someContainerID = res[0].Id;
           } else {
             console.log('Tests are about to fail because there are no running containers... start a long running container in order to pass all tests... this container should be a ubuntu container...');
@@ -40,7 +40,24 @@ describe("docker.io", function() {
           done();
         }
 
-        docker.containers.create({Image: 'ubuntu', Cmd: ["date"]}, handler);
+        docker.containers.create({
+          Image: 'ubuntu',
+          Cmd: ["date"]
+        }, handler);
+      });
+    });
+
+    describe("#attach", function() {
+
+      it("should attach to a container", function(done) {
+        this.timeout(50000);
+
+        function handler(err, res) {
+          expect(err).to.be.null;
+          done();
+        }
+
+        docker.containers.attach(someContainerID, {stream: true, stdout: true}, handler);
       });
     });
 
@@ -167,19 +184,60 @@ describe("docker.io", function() {
 
   });
 
-    describe("#runExport", function() {
+  describe("#runExport", function() {
 
-      it("should export a container", function(done) {
-        this.timeout(50000);
+    it("should export a container", function(done) {
+      this.timeout(50000);
 
-        function handler(err, res) {
-          expect(err).to.be.null;
+      function handler(err, res) {
+        expect(err).to.be.null;
 
-          done();
-        }
+        done();
+      }
 
-        docker.containers.runExport(someContainerID, handler);
-      });
+      docker.containers.runExport(someContainerID, handler);
     });
+  });
 
-})
+  describe("#info", function() {
+    it("should show all docker info", function(done) {
+      this.timeout(50000);
+
+      function handler(err, res) {
+        expect(err).to.be.null;
+
+        done();
+      }
+
+      docker.info(handler);
+    });
+  });
+
+  describe("#version", function() {
+    it("should show all docker version", function(done) {
+      this.timeout(50000);
+
+      function handler(err, res) {
+        expect(err).to.be.null;
+
+        done();
+      }
+
+      docker.version(handler);
+    });
+  });
+
+  describe("#getAuth", function() {
+    it("should show all docker version", function(done) {
+      this.timeout(50000);
+
+      function handler(err, res) {
+        expect(err).to.be.null;
+
+        done();
+      }
+
+      docker.getAuth(handler);
+    });
+  });
+});
