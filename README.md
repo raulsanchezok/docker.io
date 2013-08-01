@@ -50,6 +50,23 @@ docker.containers.create(handler);
 
 ```
 
+- build
+
+```javascript
+
+function handler(err, res) {
+    if (err) throw err;
+    console.log("data returned from Docker as JS object: ", res);
+}
+
+var options = {}; // all options listed in the REST documentation for Docker are supported.
+
+docker.containers.create('dockerfilein.tar', options, handler);
+// OR
+docker.containers.create('dockerfilein.tar', 'tag name', handler);
+
+```
+
 - inspect
 
 ```javascript
