@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/appersonlabs/docker.js.git"
+    "url": "git://github.com/appersonlabs/docker.io.git"
   },
   "keywords": [
     "docker",
