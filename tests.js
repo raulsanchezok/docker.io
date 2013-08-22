@@ -18,7 +18,7 @@ describe("docker.io", function() {
           expect(err).to.be.null;
 
           if (res.length > 0) {
-            someContainerID = res[0].Id;
+            someContainerID = res[0].Id.substring(0, 12);
           } else {
             console.log('Tests are about to fail because there are no running containers... start a long running container in order to pass all tests... this container should be a ubuntu container...');
           }
@@ -53,11 +53,12 @@ describe("docker.io", function() {
         this.timeout(50000);
 
         function handler(err, res) {
+          console.log(res);
           expect(err).to.be.null;
           done();
         }
 
-        docker.containers.attach(someContainerID, {stream: true, stdout: true}, handler);
+        docker.containers.attach(someContainerID, {logs: true, stdin: true, stream: true, stdout: true}, handler);
       });
     });
 
@@ -142,6 +143,7 @@ describe("docker.io", function() {
         this.timeout(50000);
 
         function handler(err, res) {
+          console.log(res);
           console.log('This function is not yet supported as we don\'t manage streaming results');
           //expect(err).to.be.null;
 
