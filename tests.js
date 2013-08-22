@@ -9,26 +9,6 @@ describe("docker.io", function() {
 
   describe("#containers", function() {
 
-    describe("#list", function() {
-
-      it("should list all active containers", function(done) {
-        this.timeout(50000);
-
-        function handler(err, res) {
-          expect(err).to.be.null;
-
-          if (res.length > 0) {
-            someContainerID = res[0].Id.substring(0, 12);
-          } else {
-            console.log('Tests are about to fail because there are no running containers... start a long running container in order to pass all tests... this container should be a ubuntu container...');
-          }
-          done();
-        }
-
-        docker.containers.list({}, handler);
-      });
-    });
-
     describe("#create", function() {
 
       it("should create a new container", function(done) {
@@ -37,13 +17,47 @@ describe("docker.io", function() {
         function handler(err, res) {
           expect(err).to.be.null;
 
+          someContainerID = res.Id;
+
           done();
         }
 
         docker.containers.create({
           Image: 'ubuntu',
-          Cmd: ["date"]
+          Cmd: ["bash", "-c", "while true; do echo Hello world; sleep 1; done"]
         }, handler);
+      });
+    });
+
+    describe("#start", function() {
+
+      it("should start a container", function(done) {
+        this.timeout(5000000);
+
+        function handler(err, res) {
+          expect(err).to.be.null;
+
+          done();
+        }
+
+        docker.containers.start(someContainerID, handler);
+      });
+    });
+
+    describe("#list", function() {
+
+      it("should list all active containers", function(done) {
+        this.timeout(50000);
+
+        function handler(err, res) {
+          expect(err).to.be.null;
+
+          expect(res).to.have.length.above(0);
+
+          done();
+        }
+
+        docker.containers.list({}, handler);
       });
     });
 
@@ -53,9 +67,11 @@ describe("docker.io", function() {
         this.timeout(50000);
 
         function handler(err, res) {
-          console.log(res);
-          expect(err).to.be.null;
-          done();
+            expect(err).to.be.null;
+
+            expect(res).to.have.string('Hello');
+
+            done();
         }
 
         docker.containers.attach(someContainerID, {logs: true, stdin: true, stream: true, stdout: true}, handler);
@@ -92,36 +108,6 @@ describe("docker.io", function() {
       });
     });
 
-    describe("#stop", function() {
-
-      it("should stop a running container", function(done) {
-        this.timeout(5000000);
-
-        function handler(err, res) {
-          expect(err).to.be.null;
-
-          done();
-        }
-
-        docker.containers.stop(someContainerID, handler);
-      });
-    });
-
-    describe("#start", function() {
-
-      it("should start a container", function(done) {
-        this.timeout(5000000);
-
-        function handler(err, res) {
-          expect(err).to.be.null;
-
-          done();
-        }
-
-        docker.containers.start(someContainerID, handler);
-      });
-    });
-
     describe("#restart", function() {
 
       it("should restart a running container", function(done) {
@@ -136,55 +122,6 @@ describe("docker.io", function() {
         docker.containers.restart(someContainerID, handler);
       });
     });
-
-    describe("#attach", function() {
-
-      it("should attach to a container and return a data stream", function(done) {
-        this.timeout(50000);
-
-        function handler(err, res) {
-          console.log(res);
-          console.log('This function is not yet supported as we don\'t manage streaming results');
-          //expect(err).to.be.null;
-
-          done();
-        }
-
-        docker.containers.attach(someContainerID, handler);
-      });
-    });
-
-    describe("#kill", function() {
-
-      it("should kill a container", function(done) {
-        this.timeout(5000000);
-
-        function handler(err, res) {
-          expect(err).to.be.null;
-
-          done();
-        }
-
-        docker.containers.kill(someContainerID, handler);
-      });
-    });
-
-    describe("#remove", function() {
-
-      it("should remove a container", function(done) {
-        this.timeout(50000);
-
-        function handler(err, res) {
-          expect(err).to.be.null;
-
-          done();
-        }
-
-        docker.containers.remove(someContainerID, handler);
-      });
-    });
-
-  });
 
   describe("#runExport", function() {
 
@@ -229,17 +166,51 @@ describe("docker.io", function() {
     });
   });
 
-  describe("#getAuth", function() {
-    it("should show all docker version", function(done) {
-      this.timeout(50000);
+  describe("#stop", function() {
 
-      function handler(err, res) {
-        expect(err).to.be.null;
+      it("should stop a running container", function(done) {
+        this.timeout(5000000);
 
-        done();
-      }
+        function handler(err, res) {
+          expect(err).to.be.null;
 
-      docker.getAuth(handler);
+          done();
+        }
+
+        docker.containers.stop(someContainerID, handler);
+      });
     });
+
+    describe("#kill", function() {
+
+      it("should kill a container", function(done) {
+        this.timeout(5000000);
+
+        function handler(err, res) {
+          expect(err).to.be.null;
+
+          done();
+        }
+
+        docker.containers.kill(someContainerID, handler);
+      });
+    });
+
+    describe("#remove", function() {
+
+      it("should remove a container", function(done) {
+        this.timeout(50000);
+
+        function handler(err, res) {
+          expect(err).to.be.null;
+
+          done();
+        }
+
+        docker.containers.remove(someContainerID, handler);
+      });
+    });
+
   });
+
 });
