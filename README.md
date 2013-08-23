@@ -7,9 +7,9 @@ Node.JS wrapper for low-level Docker.io HTTP interface
 
 ```javascript
 
-var docker = require('docker.js')({host:"http://localhost", port: "4243", version:'v1.4'});
+var docker = require('docker.js')({socketPath:'/var/run/docker.sock',  host:"http://localhost", port: "4243", version:'v1.4', });
 
-// Note, the options for host, port and version are all optional. The values passed
+// Note, the options for socketPath, host, port and version are all optional. The values passed
 // in this example are the defaults
 
 ```
