@@ -6,6 +6,23 @@ var someContainerID = '';
 
 
 describe("docker.io", function() {
+    describe("#general", function() {
+
+        describe("#build", function() {
+
+          it("should build a new image", function(done) {
+            this.timeout(50000);
+
+            function handler(err, res) {
+              expect(err).to.be.null;
+
+              done();
+            }
+
+           docker.build('Dockerfile.tar', 'datatower_user', handler);
+          });
+        });
+    });
 
   describe("#containers", function() {
 

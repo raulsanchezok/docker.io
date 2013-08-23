@@ -20,9 +20,9 @@
   "license": "Apache 2",
   "readmeFilename": "README.md",
   "dependencies": {
-    "request": "~2.21.0",
     "querystring": "*",
-    "follow-redirects": "*"
+    "follow-redirects": "*",
+    "flat-validator": "git://github.com/appersonlabs/flat-validator.git"
   },
   "devDependencies": {
     "chai": "~1.6.0",
