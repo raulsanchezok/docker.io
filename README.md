@@ -30,6 +30,10 @@ var options = {}; // all options listed in the REST documentation for Docker are
 docker.containers.list(options, handler);
 // OR
 docker.containers.list(handler);
+// ALSO
+docker.images.list(options, handler);
+// OR
+docker.images.list(handler);
 
 ```
 
