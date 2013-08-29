@@ -5,14 +5,31 @@ Node.JS wrapper for low-level Docker.io HTTP interface
 
 ## Usage
 
+### Using unix sockets (most secure)
+
 ```javascript
 
-var docker = require('docker.js')({socketPath:'/var/run/docker.sock',  host:"http://localhost", port: "4243", version:'v1.4', });
-
-// Note, the options for socketPath, host, port and version are all optional. The values passed
-// in this example are the defaults
+// Sockets are used by default.
+var docker = require('docker.io')({ socketPath: '/var/run/docker.sock' });
 
 ```
+
+### Using TCP connection
+
+```javascript
+
+// You must specify socketPath: false to indicate you want to use TCP connections.
+var docker = require('docker.io')({ socketPath: false, host: 'http://localhost', port: '4243'});
+
+```
+
+The defaults for the connection options are:
+
+- socketPath: /var/run/docker.sock
+- host: http://localhost
+- port: 4243
+
+### Methods
 
 We have implamented most of the container methods like:
 
@@ -30,6 +47,10 @@ var options = {}; // all options listed in the REST documentation for Docker are
 docker.containers.list(options, handler);
 // OR
 docker.containers.list(handler);
+// ALSO
+docker.images.list(options, handler);
+// OR
+docker.images.list(handler);
 
 ```
 
